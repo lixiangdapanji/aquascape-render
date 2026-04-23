@@ -1,7 +1,10 @@
 name: publish
+
+# Manual-only until the scope owner question is resolved (see ui's
+# publish.yml for the full note).
+
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   publish:
