@@ -1,0 +1,36 @@
+name: publish
+on:
+  push:
+    branches: [main]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          registry-url: https://npm.pkg.github.com/
+          scope: "@aquascape"
+
+      - run: pnpm install --no-frozen-lockfile
+      - run: pnpm build
+
+      - name: Publish (skip if version exists)
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -e
+          name=$(node -p "require('./package.json').name")
+          ver=$(node -p "require('./package.json').version")
+          echo "checking if ${name}@${ver} already published..."
+          if npm view "${name}@${ver}" version --registry=https://npm.pkg.github.com/ >/dev/null 2>&1; then
+            echo "already published, skipping"
+          else
+            npm publish --registry=https://npm.pkg.github.com/
+          fi
