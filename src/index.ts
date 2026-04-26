@@ -13,4 +13,8 @@ export { Lighting } from "./scene/Lighting.js";
 export { WaterVolume } from "./scene/WaterVolume.js";
 export { Rock } from "./scene/Rock.js";
 export { Plant } from "./scene/Plant.js";
+export { PlantSimple } from "./scene/PlantSimple.js";
+export type { PlantSimpleProps } from "./scene/PlantSimple.js";
+export { PlantedTank } from "./scene/PlantedTank.js";
+export type { PlantedTankProps, PlantEntry } from "./scene/PlantedTank.js";
 export { Aquarium } from "./Aquarium.js";
